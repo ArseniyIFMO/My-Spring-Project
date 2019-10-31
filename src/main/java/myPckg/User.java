@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.soap.SAAJResult;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
@@ -17,7 +18,16 @@ public class User {
     private String name;
 
     private String email;
-
+    public User(Integer a, String b, String c){
+        id = a;
+        name = b;
+        email = c;
+    }
+    public User(){
+        id = 0;
+        name = "x";
+        email = "y";
+    }
     public Integer getId() {
         return id;
     }
