@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -41,4 +42,11 @@ public class ShowUsersController {
 
         return "main";
     }
+    @PostMapping("filter")
+    public String filter(@RequestParam String text, Map<String, Object> model){
+        List<User> users = repo.findByName(text);
+        model.put("users", users);
+        return "main";
+    }
+
 }
