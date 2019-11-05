@@ -106,6 +106,12 @@
       <artifactId>spring-boot-autoconfigure</artifactId>
       <version>2.1.5.RELEASE</version>
     </dependency>
+    <!-- EOD -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <version> 2.1.5.RELEASE</version>
+    </dependency>
     <!-- New dep -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -123,18 +129,6 @@
       <version> 2.1.5.RELEASE</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-      <version> 2.1.5.RELEASE</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <version> 5.1.5.RELEASE</version>
-      <scope>test</scope>
-    </dependency>
     <!-- EOD -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -147,6 +141,7 @@
       <artifactId>h2</artifactId>
       <version> 1.4.199</version>
     </dependency>
+
 
   </dependencies>
 
