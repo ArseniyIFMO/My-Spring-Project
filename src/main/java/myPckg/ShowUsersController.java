@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,27 +23,39 @@ public class ShowUsersController {
 
     @GetMapping("/main")
     public String main(@RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
-        Iterable<User> users = repo.findAll();
+        Iterable<Notes> users = repo.findAll();
+
+        model.put("users", users);
+
+        return "main";
+    }
+    @GetMapping("/")
+    public String main2(@RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
+        Iterable<Notes> users = repo.findAll();
+
+        model.put("users", users);
+
+        return "main";
+    }
+    @PostMapping("add")
+    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
+       Notes user = new Notes(j, text, tag);
+        j++;
+        repo.save(user);
+
+        Iterable<Notes> users = repo.findAll();
 
         model.put("users", users);
 
         return "main";
     }
     @PostMapping
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-       User user = new User(j, text, tag);
-        j++;
-        repo.save(user);
-
-        Iterable<User> users = repo.findAll();
-
-        model.put("users", users);
-
-        return "main";
+    public String add3(Map<String, Object> model) {
+        return "login";
     }
     @PostMapping("filter")
     public String filter(@RequestParam String text, Map<String, Object> model){
-        List<User> users = repo.findByName(text);
+        List<Notes> users = repo.findByName(text);
         model.put("users", users);
         return "main";
     }

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.xml.soap.SAAJResult;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class User {
+public class Notes {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -19,12 +19,12 @@ public class User {
 
     private String email;
 
-    public User(Integer a, String b, String c){
+    public Notes(Integer a, String b, String c){
         id = a;
         name = b;
         email = c;
     }
-    public User(){
+    public Notes(){
         id = 0;
         name = "x";
         email = "y";
