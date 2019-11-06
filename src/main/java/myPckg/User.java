@@ -18,6 +18,7 @@ public class User {
     private String name;
 
     private String email;
+
     public User(Integer a, String b, String c){
         id = a;
         name = b;
