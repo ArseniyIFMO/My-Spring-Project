@@ -14,13 +14,11 @@
     <input type="text" name="text">
     <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
     <button type="submit">Найти</button>
-    {{#users}}
+    {{#messages}}
         <div>
-            <b>{{id}}</b>
-            <span>{{name}}</span>
-            <i>{{email}}</i>
+            <b>{{text}}</b>
         </div>
-    {{/users}}
+    {{/messages}}
 </form>
 <a href = "/users"> Users</a>
 <form method="post" action="/logout">

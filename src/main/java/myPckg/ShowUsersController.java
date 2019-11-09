@@ -1,11 +1,13 @@
 package myPckg;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -14,38 +16,40 @@ import java.util.Map;
 public class ShowUsersController {
     static  int j = 0;
     @Autowired
-    private MessageRepo repo;
+    private UserRepo userRepo;
+    @Autowired
+    private MessageRepo messageRepo;
     @GetMapping("/users")
-    public String users(@RequestParam(name = "name", required = false,defaultValue = "World") String name,
+    public String users(@AuthenticationPrincipal User user, @RequestParam(name = "name", required = false,defaultValue = "World") String name,
                         Model model){
         return "users";
     }
 
     @GetMapping("/main")
-    public String main(@RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
-        Iterable<Notes> users = repo.findAll();
+    public String main(@AuthenticationPrincipal User user, @RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
+        Iterable<Message> messages = messageRepo.findByAuthor(user);//?
 
-        model.put("users", users);
+        model.put("users", messages);
 
         return "main";
     }
     @GetMapping("/")
-    public String main2(@RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
-        Iterable<Notes> users = repo.findAll();
+    public String main2(@AuthenticationPrincipal User user, @RequestParam(name = "name", required = false,defaultValue = "World") String name, Map<String, Object> model){
+        Iterable<Message> messages = messageRepo.findByAuthor(user);//?
 
-        model.put("users", users);
+        model.put("users", messages);
 
         return "main";
     }
     @PostMapping("add")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-       Notes user = new Notes(j, text, tag);
+    public String add(@AuthenticationPrincipal User user,@RequestParam String text, Map<String, Object> model) {
+        Message msg = new Message(text, user);//??
         j++;
-        repo.save(user);
+        messageRepo.save(msg);
 
-        Iterable<Notes> users = repo.findAll();
+        Iterable<Message> messages = messageRepo.findByAuthor(user);//?
 
-        model.put("users", users);
+        model.put("users", messages);
 
         return "main";
     }
@@ -53,9 +57,10 @@ public class ShowUsersController {
     public String add3(Map<String, Object> model) {
         return "login";
     }
+
     @PostMapping("filter")
-    public String filter(@RequestParam String text, Map<String, Object> model){
-        List<Notes> users = repo.findByName(text);
+    public String filter(@AuthenticationPrincipal User user, @RequestParam String text, Map<String, Object> model){
+        List<Message> users = messageRepo.findByAuthorAndAndText(user ,text);//?
         model.put("users", users);
         return "main";
     }
