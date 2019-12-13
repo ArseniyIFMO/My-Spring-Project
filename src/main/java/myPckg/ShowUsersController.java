@@ -47,7 +47,7 @@ public class ShowUsersController {
         user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
 
-        return "redirect:/login";
+        return "redirect:/main";
     }
 
     @GetMapping("/")

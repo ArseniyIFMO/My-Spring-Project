@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         registry.addViewController("/login").setViewName("login.mustache");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
