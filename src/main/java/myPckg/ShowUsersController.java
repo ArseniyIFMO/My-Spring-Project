@@ -34,6 +34,15 @@ public class ShowUsersController {
         return "main";
     }
 
+    @PostMapping("/main")
+    public String main3(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Map<String, Object> model) {
+        Iterable<Notes> users = repo.findAll();
+
+        model.put("users", users);
+        System.out.println("2");
+        return "main";
+    }
+
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
@@ -92,9 +101,18 @@ public class ShowUsersController {
         return "main";
     }
 
+    @PostMapping("filterById")
+    public String filterById(@RequestParam String text, Map<String, Object> model){
+        int id = Integer.parseInt(text);
+        Iterable<Notes> users = repo.findNotesWithIdMoreThanX(id);
+        model.put("users", users);
+        return "main";
+    }
+
     @GetMapping("/login")
     public String login23(){
         System.out.println("a");
         return "login.mustache";
     }
+
 }
