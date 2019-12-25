@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -48,7 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .logout()
                         .logoutSuccessUrl("/login.mustache")
                         .permitAll()
-                ;
+                .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                .and()
+                .headers().frameOptions().disable()
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**")
+                .and().authorizeRequests().antMatchers("/console/**").permitAll();
 
         /*http.
                 httpBasic().disable()
