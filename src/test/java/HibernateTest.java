@@ -1,4 +1,5 @@
 import myPckg.*;
+import org.h2.jdbcx.JdbcConnectionPool;
 import org.junit.Test;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -9,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +26,8 @@ public class HibernateTest {
     @Autowired
     private MessageRepo repo;
     @Test
-    public void f() {
+    public void f() throws SQLException {
+
         Notes x = new Notes(1, "x", "y");
         Notes y = new Notes(2, "x", "y");
         Notes z = new Notes(3, "x", "y");

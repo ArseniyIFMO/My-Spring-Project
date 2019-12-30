@@ -26,8 +26,6 @@ import javax.sql.DataSource;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Value("${security.enable-csrf}")
-    private boolean csrfEnabled;
     @Autowired
     private DataSource dataSource;
 
@@ -35,7 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
         http
+                .authorizeRequests()
+                .antMatchers("/", "/registration").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+        /*http
                 .csrf().disable()
                 .authorizeRequests()
                      .antMatchers("/", "/main").permitAll()
@@ -49,13 +59,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .logout()
                         .logoutSuccessUrl("/login.mustache")
                         .permitAll()
-                .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                .and().authorizeRequests().antMatchers("/h2-console").permitAll()
                 .and()
                 .headers().frameOptions().disable()
                 .and()
                 .csrf().ignoringAntMatchers("/h2-console/**")
                 .and().authorizeRequests().antMatchers("/console/**").permitAll();
-
+        http.authorizeRequests().antMatchers("/").permitAll().and().authorizeRequests().antMatchers("/console/**").permitAll();
+        http.headers().frameOptions().disable();
+        http.csrf().disable();
+*/
         /*http.
                 httpBasic().disable()
                 .csrf().disable()
