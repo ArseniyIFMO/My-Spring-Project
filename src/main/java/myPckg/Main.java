@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 //To Disable security, but enable H2 console
-/*
-@SpringBootApplication(scanBasePackages = "myPckg", exclude = { SecurityAutoConfiguration.class })
-*/
+
+//@SpringBootApplication(scanBasePackages = "myPckg", exclude = { SecurityAutoConfiguration.class })
+
 //To Enable security, but disable H2 console
 @SpringBootApplication(scanBasePackages = "myPckg")
 
