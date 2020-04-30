@@ -1,3 +1,8 @@
+I disabled security  because it doesnt work properly, also i switched db to H2
+
+
+
+
 This is my simple project
 I made it to understand how Spring Boot works
 To run it you should create database with login and pass like that:
