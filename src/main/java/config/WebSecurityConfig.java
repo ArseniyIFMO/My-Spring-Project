@@ -1,5 +1,6 @@
 package config;
 
+import myPckg.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,20 +17,22 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
-@EnableWebSecurity
-@Order(Ordered.HIGHEST_PRECEDENCE)
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private DataSource dataSource;
+    UserService userService;
 
-    private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -45,11 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-        /*http.authorizeRequests().antMatchers("/").permitAll().and()
-                .authorizeRequests().antMatchers("/h2-console/**").permitAll();
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
-        */
         /*http
                 .csrf().disable()
                 .authorizeRequests()
@@ -84,26 +82,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();*/
         //logout().permitAll();
 
-
     }
 
     @Bean
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception{
-        /*UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);*/
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select username, password, active from usr where username=?")
-                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
-
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+    }
+    @Override
+    @Bean
+    public UserDetailsService userDetailsService() {
+        List<UserDetails> users= new ArrayList<UserDetails>();
+        users.add(User.withDefaultPasswordEncoder().username("admin").password("admin").roles("USER","ADMIN").build());
+        users.add(User.withDefaultPasswordEncoder().username("spring").password("spring").roles("USER").build());
+        return new InMemoryUserDetailsManager(users);
+    }
 }
+

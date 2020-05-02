@@ -12,7 +12,7 @@ import java.util.Map;
 public class ShowUsersController {
     static int j = 0;
     @Autowired
-    private MessageRepo repo;
+    private MessageRepo messageRepo;
     @Autowired
     private UserRepo userRepo;
 
@@ -27,7 +27,7 @@ public class ShowUsersController {
 
     @GetMapping("/main")
     public String main(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Map<String, Object> model) {
-        Iterable<Notes> users = repo.findAll();
+        Iterable<Notes> users = messageRepo.findAll();
 
         model.put("users", users);
         System.out.println("2");
@@ -36,7 +36,7 @@ public class ShowUsersController {
 
     @PostMapping("/main")
     public String main3(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Map<String, Object> model) {
-        Iterable<Notes> users = repo.findAll();
+        Iterable<Notes> users = messageRepo.findAll();
 
         model.put("users", users);
         System.out.println("2");
@@ -61,7 +61,7 @@ public class ShowUsersController {
 
     @GetMapping("/")
     public String main2(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Map<String, Object> model) {
-        Iterable<Notes> users = repo.findAll();
+        Iterable<Notes> users = messageRepo.findAll();
         System.out.println("4");
         model.put("users", users);
 
@@ -78,15 +78,28 @@ public class ShowUsersController {
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Notes user = new Notes(j, text, tag);
         j++;
-        repo.save(user);
+        messageRepo.save(user);
 
-        Iterable<Notes> users = repo.findAll();
+        Iterable<Notes> users = messageRepo.findAll();
 
         model.put("users", users);
         System.out.println("6");
         return "main";
     }
-
+    @GetMapping("/messageById/{id}")
+    public String messageById2(@PathVariable String id, Map<String, Object> model){
+        int intId = Integer.parseInt(id);
+        List<Notes> foundNotes  = messageRepo.findById(intId);
+        model.put("users", foundNotes);
+        return "messageById";
+    }
+    @GetMapping("/messageById")
+    public String messageById(@RequestParam String text, Map<String, Object> model){
+        int intId = Integer.parseInt(text);
+        List<Notes> foundNotes  = messageRepo.findById(intId);
+        model.put("users", foundNotes);
+        return "messageById";
+    }
     @PostMapping
     public String add3(Map<String, Object> model) {
         System.out.println("7");
@@ -96,7 +109,7 @@ public class ShowUsersController {
     @PostMapping("filter")
     public String filter(@RequestParam String text, Map<String, Object> model) {
         System.out.println("8");
-        List<Notes> users = repo.findByName(text);
+        List<Notes> users = messageRepo.findByName(text);
         model.put("users", users);
         return "main";
     }
@@ -104,7 +117,7 @@ public class ShowUsersController {
     @PostMapping("filterById")
     public String filterById(@RequestParam String text, Map<String, Object> model){
         int id = Integer.parseInt(text);
-        Iterable<Notes> users = repo.findNotesWithIdMoreThanX(id);
+        Iterable<Notes> users = messageRepo.findNotesWithIdMoreThanX(id);
         model.put("users", users);
         return "main";
     }

@@ -5,25 +5,25 @@
     <form method="post" action="add">
         <input type="text" name="text" placeholder="Введите сообщение" />
         <input type="text" name="tag" placeholder="Тэг">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+       {{! <input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
         <button type="submit">Добавить</button>
     </form>
 </div>
 <div>Показать все</div>
 <form method="post" action="/main">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    {{!<input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
     <button type="submit">Все</button>
 </form>
 <div>Найти сообщения с указанным текстом</div>
 <form method="post" action="filter">
     <input type="text" name="text">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    {{! <input type="hidden" name="_csrf" value="{{_csrf.token} }"/> }}
     <button type="submit">Найти</button>
 </form>
 <div>Найти сообщения с Id больше чем вы укажете</div>
 <form method="post" action="/filterById">
     <input type="text" name="text">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+   {{! <input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
     <button type="submit">Найти</button>
     {{#users}}
         <div>
@@ -33,10 +33,16 @@
         </div>
     {{/users}}
 </form>
+<div>Найти сообщения с указанным id(на новой странице)</div>
+<form method="get" action="/messageById">
+    <input type="text" name="text">
+    {{! <input type="hidden" name="_csrf" value="{{_csrf.token} }"/> }}
+    <button type="submit">Найти</button>
+</form>
 <a href = "/users"> Users</a>
 <a href = "/registration"> Registration</a>
 <form method="post" action="/logout">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    {{!<input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
     <input type="submit" value="Sign Out"/>
 </form>
 </body>

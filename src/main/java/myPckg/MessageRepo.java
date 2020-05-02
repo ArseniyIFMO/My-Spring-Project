@@ -12,4 +12,6 @@ public interface MessageRepo extends CrudRepository<Notes, Integer> {
 
     @Query("select e from Notes e where e.id > :id")
     List<Notes> findNotesWithIdMoreThanX(@Param("id") int id);
+
+    List<Notes>  findById(int id);
 }
