@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Controller
 public class ShowUsersController {
-    static int j = 0;
+    static int j = 1;
     @Autowired
     private MessageRepo messageRepo;
     @Autowired

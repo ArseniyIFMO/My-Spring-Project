@@ -25,14 +25,9 @@
     <input type="text" name="text">
    {{! <input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
     <button type="submit">Найти</button>
-    {{#users}}
-        <div>
-            <b>{{id}}</b>
-            <span>{{name}}</span>
-            <i>{{email}}</i>
-        </div>
-    {{/users}}
+
 </form>
+
 <div>Найти сообщения с указанным id(на новой странице)</div>
 <form method="get" action="/messageById">
     <input type="text" name="text">
@@ -45,5 +40,15 @@
     {{!<input type="hidden" name="_csrf" value="{{_csrf.token} }" />}}
     <input type="submit" value="Sign Out"/>
 </form>
+
+{{#users}}
+    <div>
+        <b>{{id}}</b>
+        <i>{{name}}</i>
+        <i>{{email}}</i>
+    </div>
+{{/users}}
+
+
 </body>
 </html>
