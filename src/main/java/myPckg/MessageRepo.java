@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
 public interface MessageRepo extends CrudRepository<Notes, Integer> {
     List<Notes> findByName(String name);
 

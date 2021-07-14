@@ -14,10 +14,6 @@ public class MyUserPrincipal implements UserDetails {
         this.user = user;
     }
 
-
-
-    //
-
     @Override
     public String getUsername() {
         return user.getUsername();
@@ -53,8 +49,6 @@ public class MyUserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    //
 
     public User getAppUser() {
         return user;

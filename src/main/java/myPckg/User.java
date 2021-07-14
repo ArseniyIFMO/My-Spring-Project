@@ -3,9 +3,6 @@ package myPckg;
 import javax.persistence.*;
 import java.util.Set;
 
-import javax.persistence.*;
-import java.util.Set;
-
 @Entity
 @Table(name = "usr")
 public class User {
