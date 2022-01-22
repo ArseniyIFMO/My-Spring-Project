@@ -6,4 +6,8 @@ Initially, it worked on mySQL, but then I decided to switch database to H2 for m
 computer without creating specific database
 
 I disabled security  because it doesnt work properly, also i switched db to H2
-To run H2 console you should uncomment spring boot appliation settings in main, because H2 dont works with security(
+To run H2 console you should uncomment spring boot appliation settings in main, because H2 dont works with security
+
+How to start:
+    1)start application
+    2) go to http://127.0.0.1:8080/
